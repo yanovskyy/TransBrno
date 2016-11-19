@@ -16,10 +16,15 @@ for div in doc.cssselect('#content > div.listing-object > table > tbody > tr'):
     first_page = requests.get(url_account)
 
     doc2 = lh.fromstring(first_page.text.encode('ISO-8859-1'))
+    print(doc2.cssselect("#content > h1")[0].text)
+
     for div2 in doc2.cssselect('#content > div.listing-object > table > tbody > tr'):
         for div3 in div2.cssselect('tr > td'):
             print(div3.text)
-        print("################################")
+
+        print("\n")
+    print("################################")
+
 """
     print(first_page.text.encode('utf-8'))
 
