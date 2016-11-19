@@ -32,7 +32,7 @@ data o uctech
 def dataUctu():    
     r = requests.get('https://api.csas.cz/sandbox/webapi/api/v2/transparentAccounts/', headers=headers)
     
-    data = json.loads(r.text,"utf-8")
+    data = json.loads(r.text,"utf8")
     A = []
     for i in range(len(data.get('accounts',[]))):
         ucet = Account(
@@ -62,7 +62,7 @@ def dataUctu():
                 0
             )
             
-            if dataUcet['transactions'][i]['sender']['accountNumber'] not in A:
+            if tranS not in A:
                 A.append(tranS)           
             
             tranR = Account(
@@ -74,7 +74,7 @@ def dataUctu():
                 0
             )
          
-            if dataUcet['transactions'][i]['sender']['accountNumber'] not in A:
+            if tranR not in A:
                 A.append(tranR)
     return A
 
@@ -92,9 +92,8 @@ def dataTransakci():
         cisloUctu = data['accounts'][i]['accountNumber']
     
         r = requests.get('https://api.csas.cz/sandbox/webapi/api/v2/transparentAccounts/'+cisloUctu+'/transactions/', headers=headers)
-        #print(json.dumps(dataUcet, indent=4, sort_keys=True))
         dataUcet = json.loads(r.text)
-        #print(json.dumps(data, indent=4, sort_keys=True))
+
         for i in range(len(dataUcet.get('transactions',[]))):
             tran = Transaction(str(dataUcet['transactions'][i]['sender']['accountNumber']), \
             str(dataUcet['transactions'][i]['receiver']['accountNumber']), \
@@ -104,4 +103,4 @@ def dataTransakci():
     return T
 
 #d = dataTransakci()
-#a = dataUctu()
+a = dataUctu()
