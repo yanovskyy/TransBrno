@@ -11,7 +11,7 @@ API přístup k datům transparentních účtu v ČSAS
 import simplejson as json
 import requests
 from classes import Account, Transaction
-import pandas as pd
+from database_manager import *
 
 headers = {
   'WEB-API-key': '678fb7e7-52d3-4c9f-a937-18fda0c84b48',
@@ -41,7 +41,7 @@ def dataUctu():
             str(data['accounts'][i]['bankCode']),
             float(data['accounts'][i]['balance']),
             data['accounts'][i].get('currency',None),
-            1
+            True
         )
         A.append(ucet)
         
@@ -59,7 +59,7 @@ def dataUctu():
                 dataUcet['transactions'][i]['sender'].get('bankCode',None),
                 None,
                 None,
-                0
+                False
             )
             
             if tranS not in A:
@@ -104,8 +104,16 @@ def dataTransakci():
             T.append(tran)
     return T
 
-#d = dataTransakci()
-#a = dataUctu()
+
+#print d
+account_list = dataUctu()
+accManager = AccountsManager()
+transManager = TransactionsManager()
+accManager.createAccounts(account_list)
+transactions_list = dataTransakci()
+transManager.createTransactions(transactions_list)
+
+
 #df = pd.DataFrame(columns=('sender','receiver','dueDate','amount'))
 #for i in range(len(d)):
 #    df.loc[i] = [d[i].sender, d[i].receiver,d[i].dueDate,d[i].amount]
