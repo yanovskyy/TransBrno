@@ -5,7 +5,9 @@ import lxml.html as lh
 import classes
 import locale
 
+
 locale.setlocale(locale.LC_ALL, 'cz')
+
 
 url = "https://www.kb.cz"
 
@@ -48,15 +50,15 @@ while requests.get(url_ucty+"index-"+str(page_no)+".shtml").status_code == 200:
         url_account = url + div.cssselect('td.ar > a')[0].get('href')
         first_page = requests.get(url_account)
 
-        print (url_account)
-
         doc2 = lh.fromstring(first_page.text.encode('ISO-8859-1'))
-        account_num = doc2.cssselect("#content > h1")[0].text
+        account_num = doc2.cssselect("#content > h1")[0].text[:-5]
+        bank_code = account_num[-4:]
         try:
             account_name = doc2.cssselect("#content > div.highlight-block > ul > li:nth-child(2) > strong")[0].text
             account_balance = doc2.cssselect("#content > div.highlight-block > ul > li:nth-child(4) > strong")[0].text
-            print(account_name)
-            print(account_balance)
+            account_currency = account_balance[-2:]
+            account_num = classes.Account(account_num, account_name, bank_code, account_balance, account_currency,
+                                      isTransparent=1)
         except:
             pass
 
