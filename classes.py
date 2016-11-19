@@ -19,6 +19,7 @@ class Transaction:
         if amount<0:
             self.sender = receiver
             self.receiver = sender
+            self.dueDate = dueDate
             self.amount = abs(amount)
         else:
             self.sender = sender
