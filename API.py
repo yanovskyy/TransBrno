@@ -103,4 +103,4 @@ def dataTransakci():
     return T
 
 #d = dataTransakci()
-a = dataUctu()
+#a = dataUctu()
