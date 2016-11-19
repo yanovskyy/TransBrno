@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import lxml.html as lh
 
@@ -11,12 +13,15 @@ doc = lh.fromstring(r.text)
 
 page_no = 1
 
+
 while requests.get(url_ucty+"index-"+str(page_no)+".shtml").status_code == 200:
 
     for div in doc.cssselect('#content > div.listing-object > table > tbody > tr'):
         url_account = url + div.cssselect('td.ar > a')[0].get('href')
         first_page = requests.get(url_account)
         doc2 = lh.fromstring(first_page.text.encode('ISO-8859-1'))
+
+        print(doc2.cssselect("#content > h1")[0].text)
         for div2 in doc2.cssselect('#content > div.listing-object > table > tbody > tr'):
             for div3 in div2.cssselect('tr > td'):
                 print(div3.text)
@@ -32,6 +37,7 @@ while requests.get(url_ucty+"index-"+str(page_no)+".shtml").status_code == 200:
                     print(div3.text)
             #print('nextpage {}'.format(x))
             x += 1
+
 
     page_no +=1
 
