@@ -13,15 +13,16 @@ class Account:
         self.balance = balance
         self.currency = currency
         self.isTransparent = isTransparent
-    
+
 class Transaction:
     def __init__(self, sender, receiver, dueDate, amount):
         if amount<0:
             self.sender = receiver
             self.receiver = sender
+            self.dueDate = dueDate
             self.amount = abs(amount)
         else:
             self.sender = sender
-            self.receiver = receiver            
+            self.receiver = receiver
             self.dueDate = dueDate
             self.amount = amount
