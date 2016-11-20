@@ -1,5 +1,6 @@
 import sqlite3
 from classes import *
+from database_manager import *
 
 class DatabaseManager(object):
     def __init__(self, db):
@@ -27,7 +28,19 @@ class AccountsManager(object):
             """
             values = (account.accountNumber, account.name, account.bankCode, account.balance, account.currency, account.isTransparent)
             for row in dbmgr.query(query, values):
-                print rowsu
+                print row
+
+    def getAccounts(self):
+        dbmgr = DatabaseManager("TRANSBRNO.db")
+        query = """
+                  SELECT * FROM ACCOUNTS;
+        """
+        values = ()
+        accounts = []
+        for row in dbmgr.query(query, values):
+            account = Account(row[0], row[1], row[2], row[3], row[4], row[5])
+            accounts.append(account)
+        return accounts
 
 class TransactionsManager(object):
     def createTransactions(self, transactions):
@@ -42,8 +55,20 @@ class TransactionsManager(object):
             for row in dbmgr.query(query, values):
                     print row
 
+    def getAllTransactions(self):
+        dbmgr = DatabaseManager("TRANSBRNO.db")
+        query = """
+                  SELECT * FROM TRANSACTIONS;
+        """
+        values = ()
+        transactions = []
+        for row in dbmgr.query(query, values):
+            transaction = Transaction(row[0], row[1], row[2], row[3], row[4])
+            transactions.append(transaction)
+        return transactions
 
 #account = Account("000000-2824570013", "Spolecenstvi Praha 4", 8000, 35345.5, "CZK", True)
-# account_list = [account]
-# accManager = AccountsManager()
+#account_list = [account]
+accManager = TransactionsManager()
+print accManager.getAllTransactions()
 # accManager.createAccounts(account_list)
