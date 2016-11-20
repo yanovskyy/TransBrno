@@ -69,6 +69,6 @@ class TransactionsManager(object):
 
 #account = Account("000000-2824570013", "Spolecenstvi Praha 4", 8000, 35345.5, "CZK", True)
 #account_list = [account]
-accManager = TransactionsManager()
-print accManager.getAllTransactions()
+#accManager = TransactionsManager()
+#print accManager.getAllTransactions()
 # accManager.createAccounts(account_list)
