@@ -28,7 +28,7 @@ class AccountsManager(object):
             """
             values = (account.accountNumber, account.name, account.bankCode, account.balance, account.currency, account.isTransparent)
             for row in dbmgr.query(query, values):
-                print row
+                print (row)
 
     def getAccounts(self):
         dbmgr = DatabaseManager("TRANSBRNO.db")
@@ -53,7 +53,7 @@ class TransactionsManager(object):
             """
             values = (transaction.sender, transaction.receiver, transaction.amount, transaction.dueDate, transaction.currency)
             for row in dbmgr.query(query, values):
-                    print row
+                    print (row)
 
     def getAllTransactions(self):
         dbmgr = DatabaseManager("TRANSBRNO.db")
@@ -63,7 +63,7 @@ class TransactionsManager(object):
         values = ()
         transactions = []
         for row in dbmgr.query(query, values):
-            transaction = Transaction(row[0], row[1], row[2], row[3], row[4])
+            transaction = Transaction(row[1], row[2], row[4], row[3], row[5])
             transactions.append(transaction)
         return transactions
 
