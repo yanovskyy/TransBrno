@@ -72,4 +72,6 @@ class TransactionsManager(object):
 #accManager = TransactionsManager()
 #print accManager.getAllTransactions()
 # accManager.createAccounts(account_list)
+
+
 #tralalala
