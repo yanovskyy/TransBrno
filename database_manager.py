@@ -27,7 +27,7 @@ class AccountsManager(object):
             """
             values = (account.accountNumber, account.name, account.bankCode, account.balance, account.currency, account.isTransparent)
             for row in dbmgr.query(query, values):
-                print rowsu
+                print (row)
 
 class TransactionsManager(object):
     def createTransactions(self, transactions):
@@ -40,7 +40,7 @@ class TransactionsManager(object):
             """
             values = (transaction.sender, transaction.receiver, transaction.amount, transaction.dueDate, transaction.currency)
             for row in dbmgr.query(query, values):
-                    print row
+                    print (row)
 
 
 #account = Account("000000-2824570013", "Spolecenstvi Praha 4", 8000, 35345.5, "CZK", True)
