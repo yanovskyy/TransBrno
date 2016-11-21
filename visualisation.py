@@ -10,6 +10,17 @@ import API
 from sklearn import preprocessing
 import database_manager as db
 
+"""
+Jestli chcete mít rúzně velká kolečka dle velikosti účtu, ve force.js nahraďte v proměnné   
+
+var node = vis.selectAll("circle.node")
+      .attr("r", 5)
+      
+      tímto
+      
+      .attr("r", function(d) { return d.balance; })
+"""
+
 #import numpy as np
 #import matplotlib.pyplot as plt
 #d = API.dataTransakci()
@@ -34,12 +45,11 @@ for i in range(len(d)):
     df.loc[i] = [d[i].sender, d[i].receiver,d[i].dueDate,d[i].amount]
 
 
-#min_max_scaler = preprocessing.MinMaxScaler()
-#dfAcc['balance'] = min_max_scaler.fit_transform(dfAcc['balance'].fillna(value=0).reshape(-1, 1))
+min_max_scaler = preprocessing.MinMaxScaler()
+dfAcc['balance'] = min_max_scaler.fit_transform(dfAcc['balance'].fillna(value=0).reshape(-1, 1))
 #dfAcc[dfAcc['balance']<1] = 1
-#dfAcc['balance'] = dfAcc['balance'] * 10
-#dfAcc.loc[dfAcc['balance']<5,'balance'] = 5
-dfAcc['balance'] = 5
+dfAcc['balance'] = dfAcc['balance'] * 20
+dfAcc.loc[dfAcc['balance']<5,'balance'] = 5
   
     
 G=nx.Graph()
@@ -71,7 +81,7 @@ import http_server
 # so add a name to each node
 for n in G:
     G.node[n]['name'] = dfAcc[dfAcc.accountNumber == n]['name'].head(1).to_string()
-    #G.node[n]['balance'] = dfAcc[dfAcc.accountNumber == n]['balance'].head(1).tolist()[0]
+    G.node[n]['balance'] = dfAcc[dfAcc.accountNumber == n]['balance'].head(1).tolist()[0]
 # write json formatted data
 g = json_graph.node_link_data(G) # node-link format to serialize
 # write json
@@ -81,12 +91,4 @@ print('Wrote node-link JSON data to force/force.json')
 http_server.load_url('force/force.html')
 print('Or copy all files in force/ to webserver and load force/force.html')
 #
-#nx.draw_graphviz(G)
-#hist = np.histogram(df['amount'], bins=20)
-#plt.plot(df['amount'])
-#plt.show()
-#plt.hist(hist)    
-#
-#print df['amount'].min(),df['amount'].max()
 
-#function(d) { return d.balance; }
